@@ -9,8 +9,8 @@ const Stopwatch = () => {
     let timer;
     if (isRunning) {
       timer = setInterval(() => {
-        setTime((prevTime) => prevTime + 10);
-      }, 10);
+        setTime((prevTime) => prevTime + 1);
+      }, 1000);
     }
     return () => clearInterval(timer);
   }, [isRunning]);
@@ -25,14 +25,15 @@ const Stopwatch = () => {
   };
 
   const formatTime = (time) => {
-    const getMilliseconds = `0${(time % 1000) / 10}`.slice(-2);
-    const getSeconds = `0${Math.floor(time / 1000) % 60}`.slice(-2);
-    return `${getSeconds}:${getMilliseconds}`;
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
   };
 
   return (
     <div>
-      <h1>{formatTime(time)}</h1>
+      <h1>Stopwatch</h1>
+      <h2>Time: {formatTime(time)}</h2>
       <button onClick={startStopHandler}>{isRunning ? 'Stop' : 'Start'}</button>
       <button onClick={resetHandler}>Reset</button>
     </div>
